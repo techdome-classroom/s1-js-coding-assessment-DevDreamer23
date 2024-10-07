@@ -1,1 +1,28 @@
+def num_islands(grid):
+    if not grid:
+        return 0
+
+    def dfs(grid, i, j):
+        # Base case: If out of bounds or at water, return
+        if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] == 'W':
+            return
+        
+        # Mark the current cell as visited by changing 'L' to 'W'
+        grid[i][j] = 'W'
+        
+        # Explore the four possible directions (up, down, left, right)
+        dfs(grid, i-1, j)  # Up
+        dfs(grid, i+1, j)  # Down
+        dfs(grid, i, j-1)  # Left
+        dfs(grid, i, j+1)  # Right
+
+    num_islands = 0
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            # If we find an unvisited landmass, it means we've found a new island
+            if grid[i][j] == 'L':
+                num_islands += 1
+                dfs(grid, i, j)  # Mark the entire island as visited
+
+    return num_islands
 
