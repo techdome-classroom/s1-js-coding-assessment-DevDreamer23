@@ -1,0 +1,13 @@
+def is_match(message, pattern):
+    def match_helper(m_idx, p_idx):
+        if m_idx == len(message) and p_idx == len(pattern):
+            return True
+        if p_idx == len(pattern):
+            return False
+        if pattern[p_idx] == '*':
+            return match_helper(m_idx, p_idx + 1) or (m_idx < len(message) and match_helper(m_idx + 1, p_idx))
+        if m_idx < len(message) and (pattern[p_idx] == '?' or pattern[p_idx] == message[m_idx]):
+            return match_helper(m_idx + 1, p_idx + 1)
+        return False
+
+    return match_helper(0, 0)
